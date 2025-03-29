@@ -3,6 +3,7 @@ package gym;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -12,11 +13,17 @@ import javax.swing.JTextField;
 
 public class GYM extends JFrame{
     
+    
+    
+    
     GYM padre;
+    
     JButton iniciarSesion = new JButton("Iniciar sesión");
     JButton registro = new JButton("Regístrate");
     JTextField nombreUsuario = new JTextField();
     JTextField password = new JTextField();
+    NVusuario obj = new NVusuario(padre);
+    ArrayList<Admin> arr = new ArrayList<>();
     
     public GYM(){
         super("Inicio De Sesion");
@@ -82,7 +89,15 @@ public class GYM extends JFrame{
         registro.setBackground(new Color(74,78,85));
         registro.setForeground(new Color(255, 200, 0));
         registro.setFont(new Font("Quenbach Medium", Font.BOLD,15));
+        registro.addActionListener((e) -> {
+            obj.nuevoClient();
+            //obj.nuevoTrabajador();
+            //obj.nuevoAdmin();
+        });
+        
         add(registro);
+        
+        
     }
 
    
