@@ -18,7 +18,12 @@ public class Md_login {
                     datosUsuario[0], // id
                     datosUsuario[1], // tipo
                     datosUsuario[2], // nombre
-                    email
+                    datosUsuario[3], // apellido
+                    email,
+                    datosUsuario[4], // contrasena
+                    datosUsuario[5], // telefono
+                    datosUsuario[6]  // direccion
+
                 );
                 return true;
             }

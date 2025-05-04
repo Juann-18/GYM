@@ -15,6 +15,11 @@ import javax.swing.JSlider;
 public class MenuCliente extends JFrame{
     public String idUsuario;
     public String nombreUsuario;
+    public String apellidoUsuario;
+    public String emailUsuario;
+    public String contrasenaUsuario;
+    public String telefonoUsuario;
+    public String direccionUsuario;
     
     
     public JButton agregarClase = new JButton("Agregar Clase");
@@ -28,6 +33,11 @@ public class MenuCliente extends JFrame{
     public MenuCliente() {
         this.idUsuario = SesionUsuario.getInstancia().getIdUsuario();
         this.nombreUsuario = SesionUsuario.getInstancia().getNombre();
+        this.apellidoUsuario = SesionUsuario.getInstancia().getApellido();
+        this.emailUsuario = SesionUsuario.getInstancia().getEmail();
+        this.contrasenaUsuario = SesionUsuario.getInstancia().getContrasena();
+        this.telefonoUsuario = SesionUsuario.getInstancia().getTelefono();
+        this.direccionUsuario = SesionUsuario.getInstancia().getIdUsuario();
         super("Start-Gym-cliente");
         setSize(700, 550);
         setLocationRelativeTo(null);
@@ -65,6 +75,8 @@ public class MenuCliente extends JFrame{
         agregarClase.addActionListener(a);
         clasesPendientes.addActionListener(a);
         cancelarClase.addActionListener(a);
+        infoPer.addActionListener(a);
+        cerrarSe.addActionListener(a);
 
         // Agregar botones al frame
         add(agregarClase);
@@ -75,7 +87,7 @@ public class MenuCliente extends JFrame{
         
     }
     
-     private void configurarBoton(JButton boton, int x, int y, int width, int height) {
+     public void configurarBoton(JButton boton, int x, int y, int width, int height) {
         boton.setBounds(x, y, width, height);
         boton.setBackground(new Color(57, 255, 20)); // Color verde brillante
         boton.setFont(new Font("Quicksand Medium", Font.BOLD, 15));
@@ -84,6 +96,16 @@ public class MenuCliente extends JFrame{
         boton.setBorderPainted(false); // Quitar el borde
     }
     
+     public void actualizarDatos() {
+        this.nombreUsuario = SesionUsuario.getInstancia().getNombre();
+        this.apellidoUsuario = SesionUsuario.getInstancia().getApellido();
+        this.emailUsuario = SesionUsuario.getInstancia().getEmail();
+        this.contrasenaUsuario = SesionUsuario.getInstancia().getContrasena();
+        this.telefonoUsuario = SesionUsuario.getInstancia().getTelefono();
+        this.direccionUsuario = SesionUsuario.getInstancia().getDireccion();
+        
+        System.out.println("Datos actualizados: " + nombreUsuario + " " + apellidoUsuario);
+    }
     
     
 }

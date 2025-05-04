@@ -137,10 +137,10 @@ public class Conexion {
 }
 
     public String[] obtenerDatosUsuario(String email) {
-        String[] datos = new String[3]; // id, tipo, nombre
+        String[] datos = new String[7]; // id, tipo, nombre
         if (conectarMySQL()) {
             try {
-                String sql = "SELECT id, tipo, nombre FROM usuario WHERE email = '" + escapeSQL(email) + "'";
+                String sql = "SELECT id, tipo, nombre, apellido, contrasena, telefono, direccion FROM usuario WHERE email = '" + escapeSQL(email) + "'";
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
 
@@ -148,6 +148,11 @@ public class Conexion {
                     datos[0] = rs.getString("id");
                     datos[1] = rs.getString("tipo");
                     datos[2] = rs.getString("nombre");
+                    datos[3] = rs.getString("apellido");
+                    datos[4] = rs.getString("contrasena");
+                    datos[5] = rs.getString("telefono");
+                    datos[6] = rs.getString("direccion");
+                    
                     return datos;
                 }
             } catch (SQLException e) {
@@ -297,24 +302,59 @@ public class Conexion {
     }
 
     public boolean validarClaseDeCliente(String idClase, String idCliente) {
-    if (conectarMySQL()) {
-        try {
-            String sql = "SELECT COUNT(*) FROM clase WHERE id = '" + escapeSQL(idClase) + 
-                         "' AND id_cliente = '" + escapeSQL(idCliente) + "'";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+        if (conectarMySQL()) {
+            try {
+                String sql = "SELECT COUNT(*) FROM clase WHERE id = '" + escapeSQL(idClase) + 
+                             "' AND id_cliente = '" + escapeSQL(idCliente) + "'";
+                stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
 
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al validar clase: " + e.getMessage());
+            } finally {
+                desconectar();
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al validar clase: " + e.getMessage());
-        } finally {
-            desconectar();
         }
+        return false;
     }
-    return false;
-}
+    
+    public boolean actualizarUsuario(ArrayList<String> datos) {
+        if (conectarMySQL()) {
+            try {
+                // Construir la consulta SQL
+                String sql = "UPDATE usuario SET " +
+                             "nombre = '" + escapeSQL(datos.get(0)) + "', " +  // nombre
+                             "apellido = '" + escapeSQL(datos.get(1)) + "', " + // apellido
+                             "email = '" + escapeSQL(datos.get(2)) + "', " +    // email
+                             "contrasena = '" + escapeSQL(datos.get(3)) + "', " + // contrasena
+                             "telefono = '" + escapeSQL(datos.get(4)) + "', " +   // telefono
+                             "direccion = '" + escapeSQL(datos.get(5)) + "' " +  // direccion
+                             "WHERE id = " + SesionUsuario.getInstancia().getIdUsuario();       // id del usuario logueado
+
+                // Ejecutar la actualización
+                boolean resultado = actualizar(sql);
+
+                if (resultado) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar usuario: " + e.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } finally {
+                desconectar();
+            }
+        }
+        return false;
+    }
+    
+    
+    
 
         
 }
