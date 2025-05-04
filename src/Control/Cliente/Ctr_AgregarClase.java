@@ -44,14 +44,20 @@ public class Ctr_AgregarClase implements ActionListener{
                 
                 datos.add(fechaClaseFormateada);
                 datos.add(horaFormateada);
-                datos.add((String) x.comboEntrenadores.getSelectedItem());
+                datos.add(x.menu.nombreUsuario);
+                datos.add((String) x.getIdEntrenadorSeleccionado());
+                datos.add(x.menu.idUsuario);
                 
                 Md_Cliente clase = new Md_Cliente(this);
                 
-                clase.guardarClase(datos);
+                if(clase.guardarClase(datos)) {
+                    confirmarClase();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al agendar la clase");
+                };
                 
 
-                confirmarClase();
+                
             }
             
         }

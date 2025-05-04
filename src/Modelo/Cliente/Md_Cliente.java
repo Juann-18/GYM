@@ -25,8 +25,8 @@ public class Md_Cliente {
             return false;
         }
         
-        String idEntrenador = datos.get(0);
-        String fecha = datos.get(1);
+        String idEntrenador = datos.get(3);
+        String fecha = datos.get(0);
         
         // Verificar si ya existe una clase para ese entrenador en esa fecha/hora
         if (conexion.existeClaseDia(idEntrenador, fecha)) {
@@ -39,10 +39,6 @@ public class Md_Cliente {
 
         // Intentar registrar la clase
         if(conexion.registraClase(datos)) {
-            JOptionPane.showMessageDialog(null, 
-                "Clase registrada con éxito", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
             return true;
         } else {
             JOptionPane.showMessageDialog(null, 
@@ -53,27 +49,5 @@ public class Md_Cliente {
         }
     }
     
-    /**
-     * Obtiene todas las clases de un cliente
-     */
-    public ArrayList<String[]> obtenerClases(String idCliente) {
-        return conexion.obtenerClasesCliente(idCliente);
-    }
     
-    /**
-     * Cancela una clase existente
-     
-    public boolean cancelarClase(String idClase) {
-        if (conexion.conectarMySQL()) {
-            try {
-                String sql = "DELETE FROM clases WHERE id = '" + conexion.escapeSQL(idClase) + "'";
-                int resultado = conexion.actualizar(sql);
-                return resultado > 0;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al cancelar clase: " + e.getMessage());
-                return false;
-            }
-        }
-        return false;
-    }*/
 }

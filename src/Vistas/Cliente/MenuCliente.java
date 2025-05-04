@@ -13,10 +13,12 @@ import javax.swing.JSlider;
 
 
 public class MenuCliente extends JFrame{
-    private String idUsuario;
-    private String nombreUsuario;
+    public String idUsuario;
+    public String nombreUsuario;
+    
     
     public JButton agregarClase = new JButton("Agregar Clase");
+    public JButton clasesPendientes = new JButton("Clases pendientes");
     public JButton cancelarClase = new JButton("Cancelar Clase");
     public JButton infoPer = new JButton("Informacion Personal");
     public JButton cerrarSe = new JButton("Cerrar Sesion");
@@ -54,15 +56,19 @@ public class MenuCliente extends JFrame{
         add(linea);
         
         configurarBoton(agregarClase, 200, 150, 300, 40);
-        configurarBoton(cancelarClase, 200, 220, 300, 40);
-        configurarBoton(infoPer, 200, 290, 300, 40);
-        configurarBoton(cerrarSe, 200, 360, 300, 40);
+        configurarBoton(clasesPendientes, 200, 220, 300, 40);
+        configurarBoton(cancelarClase, 200, 290, 300, 40);
+        configurarBoton(infoPer, 200, 360, 300, 40);
+        configurarBoton(cerrarSe, 200, 430, 300, 40);
         
         
         agregarClase.addActionListener(a);
+        clasesPendientes.addActionListener(a);
+        cancelarClase.addActionListener(a);
 
         // Agregar botones al frame
         add(agregarClase);
+        add(clasesPendientes);
         add(cancelarClase);
         add(infoPer);
         add(cerrarSe);

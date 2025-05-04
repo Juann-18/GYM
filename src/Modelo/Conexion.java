@@ -71,7 +71,7 @@ public class Conexion {
         }else return false;
         
     }
-    private String escapeSQL(String input) {
+    public String escapeSQL(String input) {
         if (input == null) return "";
         return input.replace("'", "''");
     }
@@ -208,7 +208,7 @@ public class Conexion {
     public boolean existeClaseDia(String idEntrenador, String fecha) {
     if (conectarMySQL()) {
         try {
-            String sql = "SELECT COUNT(*) FROM clases WHERE id_entrenador = '" + escapeSQL(idEntrenador) + 
+            String sql = "SELECT COUNT(*) FROM clase WHERE id_entrenador = '" + escapeSQL(idEntrenador) + 
                          "' AND fecha = '" + escapeSQL(fecha) + "'";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -231,11 +231,13 @@ public class Conexion {
     public boolean registraClase(ArrayList<String> datos) {
         if (conectarMySQL()) {
             try {
-                String sql = "INSERT INTO clases (id_entrenador, fecha, hora, id_cliente) VALUES ('" +
-                             escapeSQL(datos.get(0)) + "','" +  // id_entrenador
-                             escapeSQL(datos.get(1)) + "','" +  // fecha
-                             escapeSQL(datos.get(2)) + "','" +  // hora
-                             escapeSQL(datos.get(3)) + "')";    // id_cliente
+                 String sql = "INSERT INTO clase (fecha, hora, nombre, id_entrenador, id_cliente) VALUES ('" +
+                         escapeSQL(datos.get(0)) + "','" +  // fecha
+                         escapeSQL(datos.get(1)) + "','" +  // hora
+                         escapeSQL(datos.get(2)) + "','" +  // nombre
+                         escapeSQL(datos.get(3)) + "','" +  // id_entrenador
+                         escapeSQL(datos.get(4)) + "')";    // id_cliente
+                
                 return actualizar(sql);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al registrar clase: " + e.getMessage());
@@ -248,35 +250,71 @@ public class Conexion {
     /**
      * Obtiene todas las clases de un cliente específico
      */
-    public ArrayList<String[]> obtenerClasesCliente(String idCliente) {
-        ArrayList<String[]> clases = new ArrayList<>();
-        if (conectarMySQL()) {
+      public String[][] consultaMatriz(String sql) {
+        String matrizRegistros[][] = null;
+        if(conectarMySQL()){
             try {
-                String sql = "SELECT c.id, u.nombre as entrenador, c.fecha, c.hora " +
-                             "FROM clases c JOIN usuario u ON c.id_entrenador = u.id " +
-                             "WHERE c.id_cliente = '" + escapeSQL(idCliente) + "' " +
-                             "ORDER BY c.fecha, c.hora";
-                stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql);
-
-                while (rs.next()) {
-                    String[] clase = new String[4];
-                    clase[0] = rs.getString("id");
-                    clase[1] = rs.getString("entrenador");
-                    clase[2] = rs.getString("fecha");
-                    clase[3] = rs.getString("hora");
-                    clases.add(clase);
+                stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                rs = stmt.executeQuery(sql);
+                int canFilas = getSizeQuery(rs);
+                if (canFilas > 0) {
+                    int canColumnas = rs.getMetaData().getColumnCount();
+                    matrizRegistros = new String[canFilas][canColumnas];
+                    int f = 0;
+                    while (rs.next()) {
+                        for (int c = 0; c < canColumnas; c++) {
+                            matrizRegistros[f][c] = rs.getString(c + 1);
+                        }
+                        f++;
+                    }
+                } else {
+                    matrizRegistros = null;
+                    JOptionPane.showMessageDialog(null, "No hay registros que cumplan la condición.");
                 }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al obtener clases: " + e.getMessage());
-            } finally {
-                desconectar();
+                cerrarConsulta();
+            } catch (SQLException sqle) {
+                matrizRegistros = null;
+                JOptionPane.showMessageDialog(null, "Error al realizar la consulta." + sqle);
             }
+            desconectar();
         }
-        return clases;
+        return matrizRegistros;
     }
-    
-    
+    public void cerrarConsulta() {
+            try {
+                rs.close(); //Cerrar el objeto que recupero los resultados de la consulta				
+                stmt.close();//Cerrar el objeto que ejecuto la consulta
+            } catch (SQLException sqle) { }
+        }
+    public int getSizeQuery(ResultSet rs) {
+        int cantFilas = -1;
+        try {
+            rs.last(); //Desplazar el puntero de lectura a la ultima fila (registro)
+            cantFilas = rs.getRow(); //Calcular la cantidad de filas (registros) que arroja la consulta
+            rs.beforeFirst(); //Desplazar el puntero de lectura a la primera fila (registro)
+        } catch (SQLException sqle) { }
+        return cantFilas;
+    }
+
+    public boolean validarClaseDeCliente(String idClase, String idCliente) {
+    if (conectarMySQL()) {
+        try {
+            String sql = "SELECT COUNT(*) FROM clase WHERE id = '" + escapeSQL(idClase) + 
+                         "' AND id_cliente = '" + escapeSQL(idCliente) + "'";
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al validar clase: " + e.getMessage());
+        } finally {
+            desconectar();
+        }
+    }
+    return false;
+}
 
         
 }

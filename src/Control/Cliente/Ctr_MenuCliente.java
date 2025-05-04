@@ -2,6 +2,8 @@
 package Control.Cliente;
 
 import Vistas.Cliente.AgregaraClase;
+import Vistas.Cliente.ClasesPendientes;
+import Vistas.Cliente.EliminarClase;
 import Vistas.Cliente.MenuCliente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,11 +19,16 @@ public class Ctr_MenuCliente implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(a.agregarClase)){
-            System.out.println("Control.Cliente.Ctr_MenuCliente.actionPerformed()");
             AgregaraClase x = new AgregaraClase(a);
             a.setVisible(false);
-            
-            
+        }
+        if(e.getSource().equals(a.clasesPendientes)){
+            ClasesPendientes m = new ClasesPendientes(a);
+            a.setVisible(false);
+        }
+        if(e.getSource().equals(a.cancelarClase)){
+            EliminarClase v = new EliminarClase(a);
+            a.setVisible(false);
         }
         
         
