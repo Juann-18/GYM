@@ -1,7 +1,7 @@
 
-package Vistas.Entrenador;
+package Vistas.Admin;
 
-import Control.Entrenador.Ctr_MenuEntrenador;
+import Control.Admin.Ctr_MenuAdmin;
 import Modelo.SesionUsuario;
 import java.awt.Color;
 import java.awt.Font;
@@ -12,7 +12,7 @@ import javax.swing.JSeparator;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 
-public class MenuEntrenador extends JFrame{
+public class MenuAdmin extends JFrame{
     public String idUsuario;
     public String nombreUsuario;
     public String apellidoUsuario;
@@ -22,14 +22,15 @@ public class MenuEntrenador extends JFrame{
     public String direccionUsuario;
     
     
-    public JButton clasPendientes = new JButton("Clases Pendientes");
-    public  JButton infoPerso = new JButton("Informacion Personal");
-    public JButton cerraSe = new JButton("Cerrar Sesion");
+    public JButton agregarClase = new JButton("Registrar Entrenador");
+    public JButton clasesPendientes = new JButton("Registrar Administrador");
+    public JButton cancelarClase = new JButton("Estadisticas");
+    public JButton infoPer = new JButton("Informacion Personal");
+    public JButton cerrarSe = new JButton("Cerrar Sesion");
     
-    Ctr_MenuEntrenador ds = new Ctr_MenuEntrenador(this);
+    Ctr_MenuAdmin ds = new Ctr_MenuAdmin(this);
     
-    
-    public MenuEntrenador() {
+    public MenuAdmin(){
         this.idUsuario = SesionUsuario.getInstancia().getIdUsuario();
         this.nombreUsuario = SesionUsuario.getInstancia().getNombre();
         this.apellidoUsuario = SesionUsuario.getInstancia().getApellido();
@@ -37,8 +38,7 @@ public class MenuEntrenador extends JFrame{
         this.contrasenaUsuario = SesionUsuario.getInstancia().getContrasena();
         this.telefonoUsuario = SesionUsuario.getInstancia().getTelefono();
         this.direccionUsuario = SesionUsuario.getInstancia().getIdUsuario();
-        
-        super("Start-Gym-entrenador");
+        super("Start-Gym-cliente");
         setSize(700, 550);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -48,7 +48,10 @@ public class MenuEntrenador extends JFrame{
         crearGUI();
         setVisible(true);
     }
+    
     public void crearGUI(){
+        
+        System.out.println(nombreUsuario);
         JLabel titulo = new JLabel("START-GYM");
         titulo.setBounds(0, 0, 700, 80);
         titulo.setOpaque(true);
@@ -63,21 +66,27 @@ public class MenuEntrenador extends JFrame{
         linea.setForeground(Color.black);
         add(linea);
         
+        configurarBoton(agregarClase, 200, 150, 300, 40);
+        configurarBoton(clasesPendientes, 200, 220, 300, 40);
+        configurarBoton(cancelarClase, 200, 290, 300, 40);
+        configurarBoton(infoPer, 200, 360, 300, 40);
+        configurarBoton(cerrarSe, 200, 430, 300, 40);
         
-        configurarBoton(clasPendientes, 200, 150, 300, 40);
-        configurarBoton(infoPerso, 200, 220, 300, 40);
-        configurarBoton(cerraSe, 200, 290, 300, 40);
         
-        clasPendientes.addActionListener(ds);
-        infoPerso.addActionListener(ds);
-        cerraSe.addActionListener(ds);
+        agregarClase.addActionListener(ds);
+        clasesPendientes.addActionListener(ds);
+        cancelarClase.addActionListener(ds);
+        infoPer.addActionListener(ds);
+        cerrarSe.addActionListener(ds);
         
-        add(clasPendientes);
-        add(infoPerso);
-        add(cerraSe);
+        // Agregar botones al frame
+        add(agregarClase);
+        add(clasesPendientes);
+        add(cancelarClase);
+        add(infoPer);
+        add(cerrarSe);
         
     }
-    
     public void configurarBoton(JButton boton, int x, int y, int width, int height) {
         boton.setBounds(x, y, width, height);
         boton.setBackground(new Color(57, 255, 20)); // Color verde brillante
@@ -86,7 +95,6 @@ public class MenuEntrenador extends JFrame{
         boton.setFocusPainted(false); // Quitar el borde de enfoque
         boton.setBorderPainted(false); // Quitar el borde
     }
-    
     public void actualizarDatos() {
         this.nombreUsuario = SesionUsuario.getInstancia().getNombre();
         this.apellidoUsuario = SesionUsuario.getInstancia().getApellido();
@@ -97,7 +105,5 @@ public class MenuEntrenador extends JFrame{
         
         System.out.println("Datos actualizados: " + nombreUsuario + " " + apellidoUsuario);
     }
-    
-    
     
 }

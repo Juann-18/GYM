@@ -5,21 +5,15 @@
             <url>src/Vistas/Cliente/MenuCliente.java</url>
             <bookmark id="1">
                 <name/>
-                <line>87</line>
+                <line>109</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Vistas/Cliente/EliminarClase.java</file>
-            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Modelo/Conexion.java</file>
-            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Modelo/Cliente/Md_clases.java</file>
-            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Control/Cliente/Ctr_EliminarClase.java</file>
-            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Control/Cliente/Ctr_AgregarClase.java</file>
-            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Modelo/Cliente/Md_EliminarClase.java</file>
-            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Vistas/InicioSesion.java</file>
-            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Vistas/Cliente/MenuCliente.java</file>
+            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Control/Admin/Ctr_MenuAdmin.java</file>
+            <file>file:/D:/Información%20de%20la%20cuenta/Documents/NetBeansProjects/GYM/src/Control/Entrenador/Ctr_MenuEntrenador.java</file>
         </group>
     </open-files>
 </project-private>

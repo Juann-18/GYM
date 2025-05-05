@@ -2,7 +2,9 @@
 package Vistas;
 
 import Control.Ctr_InicioSesion;
+import Vistas.Admin.MenuAdmin;
 import Vistas.Cliente.MenuCliente;
+import Vistas.Entrenador.MenuEntrenador;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -96,6 +98,8 @@ public class InicioSesion extends  JFrame{
     }
         public static void main(String[] args) {
         InicioSesion a = new InicioSesion();
+        //MenuAdmin as = new MenuAdmin();
+        //MenuEntrenador ds = new MenuEntrenador();
         //MenuCliente menuCliente = new MenuCliente();
         //menuCliente.setVisible(true);
 

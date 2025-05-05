@@ -1,13 +1,10 @@
 
-package Vistas.Cliente;
+package Vistas.Admin;
 
-import Control.Cliente.Ctr_InfoPersonal;
-import Modelo.SesionUsuario;
-import com.toedter.calendar.JDateChooser;
+import Control.Admin.Ctr_infoAdmin;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
@@ -15,12 +12,12 @@ import javax.swing.JTextField;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 
-public class InfoPersonal extends JFrame{
-    public MenuCliente menu;
-    Ctr_InfoPersonal i = new Ctr_InfoPersonal(this);
-
+public class InfoAdmin extends JFrame{
+    public MenuAdmin menu;
+    Ctr_infoAdmin li = new Ctr_infoAdmin(this);
     
-      JLabel no = new JLabel("Nombre");
+    
+    JLabel no = new JLabel("Nombre");
     JLabel ap = new JLabel("Apellido");
     JLabel tele = new JLabel("Telefono");
     JLabel dire = new JLabel("Direccion");
@@ -37,11 +34,9 @@ public class InfoPersonal extends JFrame{
     public JTextField contra = new JTextField(menu.contrasenaUsuario);
     public JButton cancelar = new JButton("Cancelar");
     public JButton confirmar = new JButton("Confirmar");
-    
-    
-    public InfoPersonal(MenuCliente menu) {
+
+    public InfoAdmin(MenuAdmin menu) {
         this.menu = menu;
-        
         super("Start-Gym-cliente");
         setSize(700, 550);
         setLocationRelativeTo(null);
@@ -53,7 +48,7 @@ public class InfoPersonal extends JFrame{
         setVisible(true);
     }
     
-     public void crearGUI(){
+    public void crearGUI(){
         JLabel titulo = new JLabel("START-GYM");
         titulo.setBounds(0, 0, 700, 80);
         titulo.setOpaque(true);
@@ -115,20 +110,16 @@ public class InfoPersonal extends JFrame{
        menu.configurarBoton(cancelar, 100, 370, 150, 30);
        menu.configurarBoton(confirmar, 350, 370, 150, 30);
        
-       cancelar.addActionListener(i);
-       confirmar.addActionListener(i);
+       cancelar.addActionListener(li);
+       confirmar.addActionListener(li);
        
        add(confirmar);
        add(cancelar);
         
 
-        
-        
-       
-        
-
          
     }
+    
     
     
     

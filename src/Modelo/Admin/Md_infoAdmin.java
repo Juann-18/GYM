@@ -1,15 +1,12 @@
 
-package Modelo.Cliente;
+package Modelo.Admin;
 
 import Modelo.Conexion;
 import Modelo.SesionUsuario;
-import static java.awt.SystemColor.info;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 
-public class Md_infoPersonal {
-    
+public class Md_infoAdmin {
     public boolean actualizarInformacion(ArrayList<String> datos) {
         Conexion c = new Conexion();
         if(c.actualizarUsuario(datos)){

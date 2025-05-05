@@ -3,7 +3,9 @@ package Control;
 
 import Modelo.Md_login;
 import Modelo.SesionUsuario;
+import Vistas.Admin.MenuAdmin;
 import Vistas.Cliente.MenuCliente;
+import Vistas.Entrenador.MenuEntrenador;
 import Vistas.InicioSesion;
 import Vistas.Registro;
 import java.awt.event.ActionEvent;
@@ -39,6 +41,7 @@ public class Ctr_InicioSesion implements WindowListener,ActionListener{
             
             if (modelo.iniciarSesion(email, contrasena)) {
                 String tipoUsuario = SesionUsuario.getInstancia().getTipoUsuario();
+                System.out.println(tipoUsuario);
                 abrirMenuSegunTipo(tipoUsuario);
                 mp.dispose();
             } else {
@@ -72,16 +75,20 @@ public class Ctr_InicioSesion implements WindowListener,ActionListener{
         // Opcional: Configurar permisos según tipo de usuario
         switch(tipoUsuario.toLowerCase()) {
             case "admin":
-                // Habilitar todas las funciones
+                MenuAdmin sd = new MenuAdmin();
                 break;
-            case "trabajador":
-                // Habilitar funciones limitadas
+            case "entrenador":
+                System.out.println("entro");
+                MenuEntrenador mr = new MenuEntrenador();
+                mr.setVisible(true);
+                
                 break;
             case "cliente":
                 // Habilitar solo funciones básicas
                 MenuCliente me = new MenuCliente();
                 me.setVisible(true);
                 break;
+             default: System.out.println("no entro");
         }
     }
     

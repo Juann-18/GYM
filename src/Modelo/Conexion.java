@@ -55,7 +55,7 @@ public class Conexion {
     public boolean registraUsuario(ArrayList<String> datos){
         if (conectarMySQL()){
             String sql = "INSERT INTO usuario (tipo, nombre, apellido, email, contrasena, " +
-                         "telefono, direccion, tipo_id, numid, fecha_nacimiento, fecha_registro) VALUES ('" +
+                         "telefono, direccion, tipo_id, numid, fecha_nacimiento, fecha_registro, estado) VALUES ('" +
                          escapeSQL(datos.get(0)) + "','" +  // tipo
                          escapeSQL(datos.get(1)) + "','" +  // nombre
                          escapeSQL(datos.get(2)) + "','" +  // apellido
@@ -66,7 +66,8 @@ public class Conexion {
                          escapeSQL(datos.get(7)) + "','" +  // tipo_id
                          escapeSQL(datos.get(8)) + "','" +  // numid
                          escapeSQL(datos.get(9)) + "','" +  // fecha_nacimiento
-                         escapeSQL(datos.get(10)) + "')";    // fecha_registro
+                         escapeSQL(datos.get(10)) + "','" + 
+                         escapeSQL(datos.get(11)) + "')";    // fecha_registro
             return actualizar(sql);
         }else return false;
         
@@ -351,6 +352,39 @@ public class Conexion {
             }
         }
         return false;
+    }
+    
+    public int contar(String tabla, String condicion) {
+        int cont = -1;
+        if (conectarMySQL()) {
+            try {
+                String sql = "SELECT COUNT(*) FROM " + tabla;
+                if (condicion != null && !condicion.isEmpty()) {
+                    sql += " WHERE " + condicion;
+                }
+
+                stmt = conn.createStatement();
+                rs = stmt.executeQuery(sql);
+
+                if (rs.next()) {
+                    cont = rs.getInt(1);
+                }
+            } catch (SQLException sqle) {
+                JOptionPane.showMessageDialog(null, "Error al contar registros: " + sqle.getMessage());
+            } finally {
+                cerrarConsulta();
+                desconectar();
+            }
+        }
+        return cont;
+    }
+    
+    public ResultSet consulta(String sql) {
+        try {
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            rs = stmt.executeQuery(sql);
+        } catch (SQLException sqle) { }
+        return rs;
     }
     
     

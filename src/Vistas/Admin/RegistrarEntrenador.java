@@ -1,11 +1,10 @@
 
-package Vistas;
+package Vistas.Admin;
 
-import Control.Ctr_registro;
+import Control.Admin.Ctr_registraEntrenador;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -14,9 +13,9 @@ import javax.swing.JTextField;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
 
-public class Registro extends JFrame{
+public class RegistrarEntrenador extends JFrame{
     
-    public JButton regist = new JButton("Registrarse");
+     public JButton regist = new JButton("Registrarse");
     public JButton inicioSe = new JButton("Inicia Sesion");
     JLabel no = new JLabel("Nombre");
     JLabel ap = new JLabel("Apellido");
@@ -40,12 +39,11 @@ public class Registro extends JFrame{
     public JComboBox<String> tipoId = new JComboBox<>(new String[]{"Selecione tipo de ID","Cedula ciudadania", "Tarjeta identidad", "Cedula de extranjeria","Pasaporte"});
     public JDateChooser fecha = new JDateChooser();
     
-    Ctr_registro user_control = new Ctr_registro(this,1);
-    
-    public InicioSesion m;
-    
-    public Registro( InicioSesion m){
-        this.m = m;
+    public MenuAdmin menu;
+    Ctr_registraEntrenador user_control = new Ctr_registraEntrenador(this, 2);
+
+    public RegistrarEntrenador(MenuAdmin menu) {
+        this.menu = menu;
         super("Nuevo usuario");
         setSize(650, 600);
         setLocationRelativeTo(null);
@@ -54,7 +52,6 @@ public class Registro extends JFrame{
         setLayout(null);
         crearGUI();
         setVisible(true);
-
     }
     public void crearGUI(){
          no.setForeground(new Color(243, 244, 247));
@@ -149,5 +146,7 @@ public class Registro extends JFrame{
         inicioSe.addActionListener(user_control);
         add(inicioSe);
     }
+    
+
     
 }

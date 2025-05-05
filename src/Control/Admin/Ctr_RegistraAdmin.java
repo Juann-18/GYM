@@ -1,39 +1,36 @@
 
-package Control;
+package Control.Admin;
 
-import Modelo.Md_registro;
-import Vistas.InicioSesion;
-import Vistas.Registro;
+import Modelo.Admin.Md_RegistrarAdmin;
+import Modelo.Admin.Md_registrarEntrenador;
+import Vistas.Admin.RegistraAdmin;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
 
-
-public class Ctr_registro implements ActionListener {
-    
-    public Registro np;
-    Md_registro user_model;
+public class Ctr_RegistraAdmin implements ActionListener{
+    RegistraAdmin np;
     public String tipo;
     int nu;
 
-    public Ctr_registro(Registro np, int nu) {
+    public Ctr_RegistraAdmin(RegistraAdmin np, int nu) {
         this.np = np;
-        this.nu= nu;
+        this.nu = nu;
     }
+    
+    
+    
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(np.inicioSe)) evento_volver();
+        if(e.getSource().equals(np.inicioSe)) evento_volver();
         if (e.getSource().equals(np.regist)){
-            
-            if (np.nom.getText().isEmpty() || 
+                        if (np.nom.getText().isEmpty() || 
                 np.ape.getText().isEmpty() || 
                 np.correo.getText().isEmpty() || 
                 np.contra.getText().isEmpty() || 
@@ -58,10 +55,7 @@ public class Ctr_registro implements ActionListener {
                     JOptionPane.ERROR_MESSAGE);
                 return;
              }
-
-            
-            
-            
+                
             
 
             
@@ -108,10 +102,9 @@ public class Ctr_registro implements ActionListener {
                 return;
             }
 
-    // Formatear fecha para MySQL (YYYY-MM-DD)
-    String fechaNacimientoFormateada = fechaNacimientoLocal.toString();
-           
-            
+            // Formatear fecha para MySQL (YYYY-MM-DD)
+            String fechaNacimientoFormateada = fechaNacimientoLocal.toString();
+
             datos.add(tipo);
             datos.add(np.nom.getText());
             datos.add(np.ape.getText());
@@ -124,23 +117,26 @@ public class Ctr_registro implements ActionListener {
             datos.add(fechaNacimientoFormateada);
             datos.add(fechaRegistro);
             datos.add("1");
-           
             
-            user_model = new Md_registro(this);
-            
-            user_model.guardar(datos);
+            Md_RegistrarAdmin modelo = new Md_RegistrarAdmin(this);
+            modelo.guardar(datos);
             evento_volver();
+          
         }
+        
+            
+        
+        
     }
-    public void evento_volver() {
-        np.setVisible(false);
-        np.dispose();
-        np.m.setVisible(true); // mostrar el menu principal
-    }
+    
     private boolean validarFormatoEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return email != null && email.matches(regex);
     }
-
+    public void evento_volver() {
+        np.setVisible(false);
+        np.dispose();
+        np.menu.setVisible(true); // mostrar el menu principal
+    }
     
 }
